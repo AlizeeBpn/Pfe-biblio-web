@@ -577,18 +577,19 @@ function WebQuickAccessSection() {
 /* ══════════════════════════════════════════════════════════════
    F) POUR VOUS — carrousel horizontal de livres
    ══════════════════════════════════════════════════════════════ */
-const RECOMMENDED_BOOKS = BOOKS.slice(0, 5)
+const RECOMMENDED_BOOKS = BOOKS
 
 const BOOK_COVER_COLORS = [
   'var(--secondary-4)', 'var(--primary-4)', 'var(--info-3)',
-  'var(--warning-3)',   'var(--success-3)',
+  'var(--warning-3)',   'var(--success-3)', 'var(--secondary-3)',
+  'var(--primary-3)',   'var(--success-4)',
 ]
 
 function WebRecommendationsSection() {
   return (
     <section className="w-full" style={{ padding: 'var(--layout-7) 0', backgroundColor: 'var(--neutral-1)' }}>
       <Container className="flex flex-col" style={{ gap: 'var(--layout-3)' }}>
-        <SectionTitle>Pour vous</SectionTitle>
+        <SectionTitle>Pour vous — nos suggestions</SectionTitle>
 
         <div
           className="flex overflow-x-auto"
@@ -618,13 +619,34 @@ function WebRecommendationsSection() {
                 <img src={book.cover} alt={book.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   onError={e => { e.currentTarget.style.display = 'none' }} />
               </div>
-              <div className="flex flex-col" style={{ padding: 'var(--pad-md)', gap: 'var(--gap-xs)', flex: 1 }}>
+              <div className="flex flex-col" style={{ padding: 'var(--pad-md)', gap: 'var(--gap-2md)', flex: 1 }}>
                 <p style={{ fontSize: 'var(--text-body-sm)', fontWeight: 700, lineHeight: 1.4, color: 'var(--color-text-title)', margin: 0, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                   {book.title}
                 </p>
                 <p style={{ fontSize: 'var(--text-caption-sm)', fontWeight: 500, color: 'var(--color-text-subtle)', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {book.author}
                 </p>
+                {book.genres && (
+                  <div className="flex flex-wrap" style={{ gap: 'var(--gap-2xs)' }}>
+                    {book.genres.slice(0, 3).map(g => (
+                      <span
+                        key={g}
+                        style={{
+                          fontSize:        '10px',
+                          fontWeight:      600,
+                          padding:         '2px 6px',
+                          borderRadius:    'var(--br-2xs)',
+                          backgroundColor: 'var(--primary-3)',
+                          color:           'var(--primary-11)',
+                          whiteSpace:      'nowrap',
+                          lineHeight:      1.2,
+                        }}
+                      >
+                        {g}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
