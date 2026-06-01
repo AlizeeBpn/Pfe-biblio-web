@@ -1,0 +1,160 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+/* Tailwind v4 */
+@import "tailwindcss";
+
+/* Design tokens */
+@import "./styles/tokens.css";
+
+/* ── Theme Tailwind ── */
+@theme {
+  --font-body:  'Plus Jakarta Sans', sans-serif;
+  --font-brand: 'Lora', serif;
+
+  --color-primary-1:  var(--primary-1);
+  --color-primary-2:  var(--primary-2);
+  --color-primary-3:  var(--primary-3);
+  --color-primary-4:  var(--primary-4);
+  --color-primary-5:  var(--primary-5);
+  --color-primary-6:  var(--primary-6);
+  --color-primary-7:  var(--primary-7);
+  --color-primary-8:  var(--primary-8);
+  --color-primary-9:  var(--primary-9);
+  --color-primary-10: var(--primary-10);
+  --color-primary-11: var(--primary-11);
+  --color-primary-12: var(--primary-12);
+
+  --color-secondary-1:  var(--secondary-1);
+  --color-secondary-2:  var(--secondary-2);
+  --color-secondary-3:  var(--secondary-3);
+  --color-secondary-4:  var(--secondary-4);
+  --color-secondary-5:  var(--secondary-5);
+  --color-secondary-6:  var(--secondary-6);
+  --color-secondary-7:  var(--secondary-7);
+  --color-secondary-8:  var(--secondary-8);
+  --color-secondary-9:  var(--secondary-9);
+  --color-secondary-10: var(--secondary-10);
+  --color-secondary-11: var(--secondary-11);
+  --color-secondary-12: var(--secondary-12);
+
+  --color-neutral-1:  var(--neutral-1);
+  --color-neutral-2:  var(--neutral-2);
+  --color-neutral-3:  var(--neutral-3);
+  --color-neutral-4:  var(--neutral-4);
+  --color-neutral-5:  var(--neutral-5);
+  --color-neutral-6:  var(--neutral-6);
+  --color-neutral-7:  var(--neutral-7);
+  --color-neutral-8:  var(--neutral-8);
+  --color-neutral-9:  var(--neutral-9);
+  --color-neutral-10: var(--neutral-10);
+  --color-neutral-11: var(--neutral-11);
+  --color-neutral-12: var(--neutral-12);
+
+  --color-white:            var(--color-white);
+  --color-text-brand:       var(--color-text-brand);
+  --color-text-title:       var(--color-text-title);
+  --color-text-body:        var(--color-text-body);
+  --color-text-subtle:      var(--color-text-subtle);
+  --color-text-placeholder: var(--color-text-placeholder);
+  --color-icon-action:      var(--color-icon-action);
+  --color-icon-info:        var(--color-icon-info);
+
+  --spacing-pad-none: var(--pad-none);
+  --spacing-pad-2xs:  var(--pad-2xs);
+  --spacing-pad-xs:   var(--pad-xs);
+  --spacing-pad-sm:   var(--pad-sm);
+  --spacing-pad-md:   var(--pad-md);
+  --spacing-pad-2md:  var(--pad-2md);
+  --spacing-pad-lg:   var(--pad-lg);
+  --spacing-pad-xl:   var(--pad-xl);
+  --spacing-pad-2xl:  var(--pad-2xl);
+  --spacing-pad-3xl:  var(--pad-3xl);
+
+  --spacing-gap-none: var(--gap-none);
+  --spacing-gap-2xs:  var(--gap-2xs);
+  --spacing-gap-xs:   var(--gap-xs);
+  --spacing-gap-sm:   var(--gap-sm);
+  --spacing-gap-md:   var(--gap-md);
+  --spacing-gap-2md:  var(--gap-2md);
+  --spacing-gap-lg:   var(--gap-lg);
+  --spacing-gap-xl:   var(--gap-xl);
+  --spacing-gap-2xl:  var(--gap-2xl);
+  --spacing-gap-3xl:  var(--gap-3xl);
+
+  --spacing-layout-0:  var(--layout-0);
+  --spacing-layout-1:  var(--layout-1);
+  --spacing-layout-2:  var(--layout-2);
+  --spacing-layout-3:  var(--layout-3);
+  --spacing-layout-4:  var(--layout-4);
+  --spacing-layout-5:  var(--layout-5);
+  --spacing-layout-6:  var(--layout-6);
+  --spacing-layout-7:  var(--layout-7);
+  --spacing-layout-8:  var(--layout-8);
+  --spacing-layout-9:  var(--layout-9);
+  --spacing-layout-10: var(--layout-10);
+  --spacing-layout-11: var(--layout-11);
+  --spacing-layout-12: var(--layout-12);
+
+  --radius-2xs:       var(--br-2xs);
+  --radius-xs:        var(--br-xs);
+  --radius-sm:        var(--br-sm);
+  --radius-md:        var(--br-md);
+  --radius-lg:        var(--br-lg);
+  --radius-layout:    var(--br-layout);
+  --radius-layout-xl: var(--br-layout-xl);
+  --radius-round:     var(--br-round);
+
+  --text-caption-sm: var(--text-caption-sm);
+  --text-caption-md: var(--text-caption-md);
+  --text-body-sm:    var(--text-body-sm);
+  --text-body-md:    var(--text-body-md);
+  --text-body-lg:    var(--text-body-lg);
+  --text-heading-sm: var(--text-heading-sm);
+  --text-heading-md: var(--text-heading-md);
+  --text-heading-lg: var(--text-heading-lg);
+
+  --shadow-card:         var(--shadow-card);
+  --shadow-object:       var(--shadow-object);
+  --shadow-nav:          var(--shadow-nav);
+  --shadow-color-card:   var(--shadow-color-card);
+  --shadow-color-object: var(--shadow-color-object);
+}
+
+/* ── Base styles ── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--neutral-2);
+    font-family: var(--font-body);
+    color: var(--color-text-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  #root {
+    min-height: 100dvh;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-brand);
+    color: var(--color-text-title);
+  }
+
+  input::placeholder {
+    color: var(--color-text-placeholder);
+    opacity: 1;
+  }
+}
