@@ -58,6 +58,8 @@ function TabletLayout({ isLoggedIn, onLogin, onLogout }) {
 
       <TabletHeroBanner />
 
+      <TabletSearchBar />
+
       <TabletQuickAccessCards />
       <div style={{ height: '32px' }} />
       <TabletCategorySlider />
@@ -130,11 +132,10 @@ function TabletHeader({ isLoggedIn, onLogin, onLogout, burgerOpen, setBurgerOpen
   );
 }
 
-/* ── Hero avec barre de recherche intégrée en bas ── */
+/* ── Hero plein écran ── */
 function TabletHeroBanner() {
-  const [searchQuery, setSearchQuery] = useState('')
   return (
-    <div style={{ overflow: 'hidden', position: 'relative', height: 'calc(100vh - 60px)', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ overflow: 'hidden', position: 'relative', height: 'calc(100vh - 60px)' }}>
       {/* Image de fond */}
       <img
         src="/images/bibliotheque-meriadeck-modernisation-600ea42d10895907865413%20(1).jpg"
@@ -145,16 +146,22 @@ function TabletHeroBanner() {
       {/* Overlay vert */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(131deg, rgba(28,55,54,1) 0%, rgba(32,90,89,0.75) 100%)' }} />
       {/* Texte centré */}
-      <div style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 24px', color: 'white' }}>
-        <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '24px', fontWeight: 700, margin: 0, lineHeight: '32px' }}>Explorez, découvrez,<br />vivez la culture</h2>
-        <p style={{ fontSize: '15px', marginTop: '10px', opacity: 0.9, lineHeight: '22px' }}>Accédez à 1,3 million de documents et participez à la vie culturelle du réseau des Bibliothèques de Bordeaux.</p>
+      <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 24px', color: 'white' }}>
+        <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '28px', fontWeight: 700, margin: 0, lineHeight: '36px' }}>Explorez, découvrez,<br />vivez la culture</h2>
+        <p style={{ fontSize: '15px', marginTop: '12px', opacity: 0.9, lineHeight: '22px' }}>Accédez à 1,3 million de documents et participez à la vie culturelle du réseau des Bibliothèques de Bordeaux.</p>
       </div>
-      {/* Barre de recherche en bas du hero */}
-      <div style={{ position: 'relative', zIndex: 2, padding: '0 16px 24px' }}>
-        <div className="flex items-center w-full" style={{ height: '48px', backgroundColor: 'white', border: '1px solid #DAD9DB', borderRadius: '9999px', padding: '0 16px', gap: '8px', boxShadow: SHADOW_HEADER }}>
-          <IconSearch size={18} strokeWidth={2} color="#8E8D8F" aria-hidden="true" />
-          <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Chercher un livre…" aria-label="Chercher un livre" className="flex-1 bg-transparent outline-none border-none" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#222123' }} />
-        </div>
+    </div>
+  );
+}
+
+/* ── Barre de recherche sur fond blanc ── */
+function TabletSearchBar() {
+  const [searchQuery, setSearchQuery] = useState('')
+  return (
+    <div style={{ padding: '16px 16px 12px', backgroundColor: '#FFFFFF', position: 'relative', zIndex: 10 }}>
+      <div className="flex items-center w-full" style={{ height: '48px', backgroundColor: 'white', border: '1px solid #DAD9DB', borderRadius: '9999px', padding: '0 16px', gap: '8px', boxShadow: SHADOW_HEADER }}>
+        <IconSearch size={18} strokeWidth={2} color="#8E8D8F" aria-hidden="true" />
+        <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Chercher un livre…" aria-label="Chercher un livre" className="flex-1 bg-transparent outline-none border-none" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#222123' }} />
       </div>
     </div>
   );
@@ -213,18 +220,18 @@ function TabletCategorySlider() {
   );
 }
 
-/* ── Festival card — presque tout l'écran ── */
+/* ── Festival card — 60% image / 40% texte ── */
 function TabletHighlightFestival() {
   return (
     <div className="flex flex-col" style={{ gap: '16px', padding: '0 16px 32px' }}>
       <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', color: 'var(--color-text-brand)', margin: '0 0 4px' }}>À ne pas manquer</h2>
-      <motion.a href="#evenement-festival" whileTap={{ scale: 0.98 }} className="flex flex-col overflow-hidden no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD }} aria-label="Festival 33 Tour — En savoir plus">
-        <div style={{ height: '55vh', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
+      <motion.a href="#evenement-festival" whileTap={{ scale: 0.98 }} className="flex flex-col overflow-hidden no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD, height: '70vh' }} aria-label="Festival 33 Tour — En savoir plus">
+        <div style={{ height: '60%', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
           <div style={{ position: 'absolute', inset: 0, background: 'url(/images/event-festival33.png) center/cover no-repeat' }} />
         </div>
-        <div className="flex flex-col" style={{ padding: '16px', gap: '10px' }}>
+        <div className="flex flex-col" style={{ height: '40%', padding: '16px', gap: '10px', justifyContent: 'center' }}>
           <Badge variant="default" size="medium">Festival • Mériadeck</Badge>
-          <h3 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '18px', lineHeight: '120%', color: '#222123', margin: 0 }}>Festival 33 Tour</h3>
+          <h3 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#222123', margin: 0 }}>Festival 33 Tour</h3>
           <p style={{ fontSize: '14px', fontWeight: 400, lineHeight: '21px', color: '#656366', margin: 0 }}>En juin, la scène musicale locale fait la tournée des bibliothèques</p>
           <span className="inline-flex items-center" style={{ gap: '6px', fontSize: '14px', fontWeight: 600, color: '#297473' }}>En savoir plus <IconChevronRight size={16} strokeWidth={2} /></span>
         </div>
@@ -282,31 +289,31 @@ function TabletAgendaEventCards() {
   );
 }
 
-/* ── Découvrir le patrimoine — 100vh ── */
+/* ── Découvrir le patrimoine — 100vh, image adaptée, boutons agrandis ── */
 function TabletHeritageSection() {
   return (
     <section style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh', borderBottom: '20px solid #357E7D', display: 'flex', flexDirection: 'column' }}>
-      {/* Image de fond avec overlay */}
+      {/* Image de fond avec overlay — contain pour ne pas couper l'image */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-        <img src="/images/heritage-bg.png" alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        <img src="/images/heritage-bg.png" alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
       </div>
       <div style={{ position: 'absolute', inset: 0, zIndex: 1, backgroundColor: 'rgba(255,255,255,0.7)' }} />
 
       {/* Contenu centré verticalement */}
-      <div className="flex flex-col" style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '32px 16px 40px', gap: '16px' }}>
-        <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#204140', margin: 0 }}>Découvrir le patrimoine</h2>
-        <div className="flex flex-col" style={{ gap: '10px' }}>
-          <motion.a href="#patrimoine-detail" whileTap={{ scale: 0.98 }} className="flex flex-col items-center no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD, padding: '18px', gap: '8px' }}>
-            <p style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '18px', lineHeight: '120%', color: '#222123', margin: 0, textAlign: 'center' }}>Les collections</p>
-            <p style={{ fontSize: '15px', fontWeight: 700, lineHeight: '22px', color: '#656366', margin: 0, textAlign: 'center' }}>patrimoniales</p>
+      <div className="flex flex-col" style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '32px 16px 40px', gap: '20px' }}>
+        <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '24px', lineHeight: '30px', color: '#204140', margin: 0 }}>Découvrir le patrimoine</h2>
+        <div className="flex flex-col" style={{ gap: '12px' }}>
+          <motion.a href="#patrimoine-detail" whileTap={{ scale: 0.98 }} className="flex flex-col items-center no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD, padding: '24px 18px', gap: '10px' }}>
+            <p style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#222123', margin: 0, textAlign: 'center' }}>Les collections</p>
+            <p style={{ fontSize: '16px', fontWeight: 700, lineHeight: '22px', color: '#656366', margin: 0, textAlign: 'center' }}>patrimoniales</p>
           </motion.a>
-          <motion.a href="#patrimoine-detail" whileTap={{ scale: 0.98 }} className="flex flex-col items-center no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD, padding: '18px', gap: '8px' }}>
-            <p style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '18px', lineHeight: '120%', color: '#222123', margin: 0, textAlign: 'center' }}>Séléné</p>
-            <p style={{ fontSize: '15px', fontWeight: 700, lineHeight: '22px', color: '#656366', margin: 0, textAlign: 'center' }}>la bibliothèque numérique</p>
+          <motion.a href="#patrimoine-detail" whileTap={{ scale: 0.98 }} className="flex flex-col items-center no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD, padding: '24px 18px', gap: '10px' }}>
+            <p style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#222123', margin: 0, textAlign: 'center' }}>Séléné</p>
+            <p style={{ fontSize: '16px', fontWeight: 700, lineHeight: '22px', color: '#656366', margin: 0, textAlign: 'center' }}>la bibliothèque numérique</p>
           </motion.a>
-          <motion.a href="#patrimoine-detail" whileTap={{ scale: 0.98 }} className="flex flex-col items-center no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD, padding: '18px', gap: '8px' }}>
-            <p style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '18px', lineHeight: '120%', color: '#222123', margin: 0, textAlign: 'center' }}>Les essais</p>
-            <p style={{ fontSize: '15px', fontWeight: 700, lineHeight: '22px', color: '#656366', margin: 0, textAlign: 'center' }}>de montaigne</p>
+          <motion.a href="#patrimoine-detail" whileTap={{ scale: 0.98 }} className="flex flex-col items-center no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD, padding: '24px 18px', gap: '10px' }}>
+            <p style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#222123', margin: 0, textAlign: 'center' }}>Les essais</p>
+            <p style={{ fontSize: '16px', fontWeight: 700, lineHeight: '22px', color: '#656366', margin: 0, textAlign: 'center' }}>de montaigne</p>
           </motion.a>
         </div>
       </div>
