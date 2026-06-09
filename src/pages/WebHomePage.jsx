@@ -51,22 +51,13 @@ const NAV_ITEMS = [
    ══════════════════════════════════════════════════════════════ */
 function TabletLayout({ isLoggedIn, onLogin, onLogout }) {
   const [burgerOpen, setBurgerOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <div className="min-h-screen w-full" style={{ fontFamily: 'var(--font-body)', backgroundColor: 'var(--color-white)', color: 'var(--color-text-body)', maxWidth: '430px', marginInline: 'auto' }}>
+    <div className="min-h-screen" style={{ fontFamily: 'var(--font-body)', backgroundColor: 'var(--color-white)', color: 'var(--color-text-body)', maxWidth: '100%', marginInline: 'auto', overflowX: 'hidden' }}>
       <TabletHeader isLoggedIn={isLoggedIn} onLogin={onLogin} onLogout={onLogout} burgerOpen={burgerOpen} setBurgerOpen={setBurgerOpen} />
 
       <TabletHeroBanner />
 
-      {/* Recherche après le hero */}
-      <div style={{ padding: '20px 16px 12px', backgroundColor: 'var(--color-white)' }}>
-        <div className="flex items-center w-full" style={{ height: '48px', backgroundColor: 'white', border: '1px solid #DAD9DB', borderRadius: '9999px', padding: '0 16px', gap: '8px', boxShadow: SHADOW_HEADER }}>
-          <IconSearch size={18} strokeWidth={2} color="#8E8D8F" aria-hidden="true" />
-          <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Chercher un livre…" aria-label="Chercher un livre" className="flex-1 bg-transparent outline-none border-none" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#222123' }} />
-        </div>
-      </div>
-      <div style={{ height: '16px' }} />
       <TabletQuickAccessCards />
       <div style={{ height: '32px' }} />
       <TabletCategorySlider />
@@ -84,7 +75,7 @@ function TabletLayout({ isLoggedIn, onLogin, onLogout }) {
   );
 }
 
-/* ── Header (sans bouton accessibilité, déplacé dans burger) ── */
+/* ── Header ── */
 function TabletHeader({ isLoggedIn, onLogin, onLogout, burgerOpen, setBurgerOpen }) {
   return (
     <header className="sticky top-0 z-50 w-full" style={{ height: '60px', backgroundColor: 'white', borderBottom: '1px solid #F1F0F1', boxShadow: SHADOW_HEADER }}>
@@ -93,7 +84,7 @@ function TabletHeader({ isLoggedIn, onLogin, onLogout, burgerOpen, setBurgerOpen
           <div className="shrink-0 flex items-center justify-center" style={{ width: '36px', height: '36px' }}>
             <img src="/images/logo-icon.svg" alt="" aria-hidden="true" width={36} height={36} style={{ display: 'block' }} />
           </div>
-          <span style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '16px', lineHeight: '20px', color: '#204140', whiteSpace: 'nowrap' }}>Bibliothèques de Bordeaux</span>
+          <span style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '18px', lineHeight: '22px', color: '#204140', whiteSpace: 'nowrap' }}>Bibliothèques de Bordeaux</span>
         </a>
 
         <button onClick={() => setBurgerOpen(!burgerOpen)} className="flex items-center justify-center bg-transparent border-none cursor-pointer shrink-0" style={{ width: '40px', height: '40px', color: '#204140' }} aria-label={burgerOpen ? 'Fermer le menu' : 'Ouvrir le menu'}>
@@ -129,7 +120,6 @@ function TabletHeader({ isLoggedIn, onLogin, onLogout, burgerOpen, setBurgerOpen
               <>
                 <button onClick={() => { onLogin(); setBurgerOpen(false) }} className="flex items-center justify-center font-bold cursor-pointer border-none outline-none w-full" style={{ height: '40px', padding: '0 16px', gap: '6px', fontSize: '14px', borderRadius: '8px', backgroundColor: '#25706F', color: 'white', boxShadow: SHADOW_NAV, marginBottom: '8px' }}><IconUserPlus size={16} strokeWidth={2} /> Inscription</button>
                 <button onClick={() => { onLogin(); setBurgerOpen(false) }} className="flex items-center justify-center font-semibold cursor-pointer border-none outline-none w-full" style={{ height: '40px', padding: '0 16px', gap: '6px', fontSize: '14px', borderRadius: '8px', backgroundColor: 'white', color: '#656366', border: '2px solid #CFCDD0' }}><IconUser size={16} strokeWidth={2} /> Connexion</button>
-                {/* Accessibilité dans le burger */}
                 <button onClick={() => setBurgerOpen(false)} className="flex items-center justify-center font-semibold cursor-pointer border-none outline-none w-full mt-[8px]" aria-label="Options d'accessibilité" style={{ height: '40px', padding: '0 16px', gap: '6px', fontSize: '14px', borderRadius: '8px', backgroundColor: '#F4D2DE', color: '#4D0F26', border: '1px solid #E8BCC8' }}><IconEye size={16} strokeWidth={2} /> Accessibilité</button>
               </>
             )}
@@ -140,10 +130,11 @@ function TabletHeader({ isLoggedIn, onLogin, onLogout, burgerOpen, setBurgerOpen
   );
 }
 
-/* ── Hero ── */
+/* ── Hero avec barre de recherche intégrée en bas ── */
 function TabletHeroBanner() {
+  const [searchQuery, setSearchQuery] = useState('')
   return (
-    <div style={{ overflow: 'hidden', position: 'relative', minHeight: '50vh', display: 'flex', alignItems: 'center' }}>
+    <div style={{ overflow: 'hidden', position: 'relative', height: 'calc(100vh - 60px)', display: 'flex', flexDirection: 'column' }}>
       {/* Image de fond */}
       <img
         src="/images/bibliotheque-meriadeck-modernisation-600ea42d10895907865413%20(1).jpg"
@@ -153,10 +144,17 @@ function TabletHeroBanner() {
       />
       {/* Overlay vert */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(131deg, rgba(28,55,54,1) 0%, rgba(32,90,89,0.75) 100%)' }} />
-      {/* Texte */}
-      <div style={{ position: 'relative', zIndex: 2, padding: '32px 24px', color: 'white', width: '100%' }}>
+      {/* Texte centré */}
+      <div style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 24px', color: 'white' }}>
         <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '24px', fontWeight: 700, margin: 0, lineHeight: '32px' }}>Explorez, découvrez,<br />vivez la culture</h2>
         <p style={{ fontSize: '15px', marginTop: '10px', opacity: 0.9, lineHeight: '22px' }}>Accédez à 1,3 million de documents et participez à la vie culturelle du réseau des Bibliothèques de Bordeaux.</p>
+      </div>
+      {/* Barre de recherche en bas du hero */}
+      <div style={{ position: 'relative', zIndex: 2, padding: '0 16px 24px' }}>
+        <div className="flex items-center w-full" style={{ height: '48px', backgroundColor: 'white', border: '1px solid #DAD9DB', borderRadius: '9999px', padding: '0 16px', gap: '8px', boxShadow: SHADOW_HEADER }}>
+          <IconSearch size={18} strokeWidth={2} color="#8E8D8F" aria-hidden="true" />
+          <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Chercher un livre…" aria-label="Chercher un livre" className="flex-1 bg-transparent outline-none border-none" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#222123' }} />
+        </div>
       </div>
     </div>
   );
@@ -172,7 +170,7 @@ function TabletQuickAccessCards() {
   ];
 
   return (
-    <div className="flex flex-col" style={{ gap: '14px', padding: '0 16px 24px' }}>
+    <div className="flex flex-col" style={{ gap: '14px', padding: '24px 16px 24px' }}>
       <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', color: 'var(--color-text-brand)', margin: '0 0 4px' }}>Accès rapides</h2>
       <div className="grid grid-cols-2" style={{ gap: '8px' }}>
         {cards.map(card => (
@@ -203,7 +201,7 @@ function TabletCategorySlider() {
         <div className="flex overflow-x-auto" style={{ gap: '8px', paddingBottom: '4px', paddingRight: '16px', scrollbarWidth: 'none' }}>
           {TABLET_CATEGORIES.map(cat => (
             <motion.div key={cat} whileTap={{ scale: 0.96 }} className="relative shrink-0 flex items-center overflow-hidden" style={{ width: '140px', height: '60px', padding: '10px 12px', borderRadius: '8px', border: '1px solid #A6DCDA', background: 'linear-gradient(224deg, #FAFEFD 6%, #E1F7F6 90%)', boxShadow: SHADOW_NAV, cursor: 'pointer' }}>
-              <span style={{ position: 'relative', zIndex: 10, fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '14px', lineHeight: '120%', color: '#297473' }}>{cat}</span>
+              <span style={{ position: 'relative', zIndex: 10, fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '15px', lineHeight: '120%', color: '#297473' }}>{cat}</span>
               <div style={{ position: 'absolute', right: '-8px', bottom: '-10px', width: '40px', height: '56px', borderRadius: '4px', boxShadow: '0px -1px 2px 0px rgba(142,141,143,0.10), 0px -3px 3px 0px rgba(142,141,143,0.09), 0px -6px 4px 0px rgba(142,141,143,0.05), 0px 2px 4px 0px rgba(142,141,143,0.10), 0px 7px 7px 0px rgba(142,141,143,0.09)', transform: 'rotate(15deg)', overflow: 'hidden', zIndex: 1 }} aria-hidden="true">
                 <img src="/images/category-card-img.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </div>
@@ -215,13 +213,13 @@ function TabletCategorySlider() {
   );
 }
 
-/* ── Festival card ── */
+/* ── Festival card — presque tout l'écran ── */
 function TabletHighlightFestival() {
   return (
     <div className="flex flex-col" style={{ gap: '16px', padding: '0 16px 32px' }}>
       <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', color: 'var(--color-text-brand)', margin: '0 0 4px' }}>À ne pas manquer</h2>
       <motion.a href="#evenement-festival" whileTap={{ scale: 0.98 }} className="flex flex-col overflow-hidden no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD }} aria-label="Festival 33 Tour — En savoir plus">
-        <div style={{ height: '160px', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
+        <div style={{ height: '55vh', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
           <div style={{ position: 'absolute', inset: 0, background: 'url(/images/event-festival33.png) center/cover no-repeat' }} />
         </div>
         <div className="flex flex-col" style={{ padding: '16px', gap: '10px' }}>
@@ -257,7 +255,7 @@ function TabletAgendaPills() {
   );
 }
 
-/* ── 4 event cards compactes ── */
+/* ── 4 event cards — comme "À ne pas manquer" ── */
 const TABLET_EVENTS = [
   { badge: 'Exposition • Mériadeck', title: 'Rencontre avec Joël Dicker', meta: 'Jeudi 4 juin à 17h30 - Mériadeck', img: '/images/event-joel-dicker.png' },
   { badge: 'Exposition • Mériadeck', title: 'Rencontre dessinée avec Véronique Tadjo', meta: 'Jeudi 4 juin à 17h30 - Mériadeck', img: '/images/event-veronique.jpg' },
@@ -266,16 +264,17 @@ const TABLET_EVENTS = [
 ];
 function TabletAgendaEventCards() {
   return (
-    <div className="flex flex-col" style={{ gap: '10px', padding: '0 16px 24px' }}>
+    <div className="flex flex-col" style={{ gap: '16px', padding: '0 16px 24px' }}>
       {TABLET_EVENTS.map((event, i) => (
         <motion.a key={i} href="#event-detail" whileTap={{ scale: 0.98 }} className="flex flex-col overflow-hidden no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD }} aria-label={`${event.title} — En savoir plus`}>
-          <div style={{ height: '120px', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
+          <div style={{ height: '200px', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
             <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${event.img})`, backgroundSize: 'cover', backgroundPosition: 'top' }} />
           </div>
-          <div className="flex flex-col" style={{ padding: '14px', gap: '8px' }}>
+          <div className="flex flex-col" style={{ padding: '16px', gap: '10px' }}>
             <Badge variant="default" size="medium">{event.badge}</Badge>
             <h3 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#222123', margin: 0 }}>{event.title}</h3>
             <p style={{ fontSize: '14px', fontWeight: 400, lineHeight: '20px', color: '#656366', margin: 0 }}>{event.meta}</p>
+            <span className="inline-flex items-center" style={{ gap: '6px', fontSize: '14px', fontWeight: 600, color: '#297473' }}>En savoir plus <IconChevronRight size={16} strokeWidth={2} /></span>
           </div>
         </motion.a>
       ))}
@@ -283,18 +282,18 @@ function TabletAgendaEventCards() {
   );
 }
 
-/* ── Découvrir le patrimoine compact — avec image de fond comme desktop ── */
+/* ── Découvrir le patrimoine — 100vh ── */
 function TabletHeritageSection() {
   return (
-    <section style={{ position: 'relative', overflow: 'hidden', borderBottom: '20px solid #357E7D' }}>
+    <section style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh', borderBottom: '20px solid #357E7D', display: 'flex', flexDirection: 'column' }}>
       {/* Image de fond avec overlay */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         <img src="/images/heritage-bg.png" alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
       </div>
       <div style={{ position: 'absolute', inset: 0, zIndex: 1, backgroundColor: 'rgba(255,255,255,0.7)' }} />
 
-      {/* Contenu */}
-      <div className="flex flex-col" style={{ position: 'relative', zIndex: 2, padding: '32px 16px 40px', gap: '16px' }}>
+      {/* Contenu centré verticalement */}
+      <div className="flex flex-col" style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '32px 16px 40px', gap: '16px' }}>
         <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#204140', margin: 0 }}>Découvrir le patrimoine</h2>
         <div className="flex flex-col" style={{ gap: '10px' }}>
           <motion.a href="#patrimoine-detail" whileTap={{ scale: 0.98 }} className="flex flex-col items-center no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD, padding: '18px', gap: '8px' }}>
@@ -315,16 +314,16 @@ function TabletHeritageSection() {
   );
 }
 
-/* ── Book carousel (sans titre "Recommandés pour vous") ── */
+/* ── Book carousel ── */
 function TabletBookCarousel({ books }) {
   return (
     <div style={{ marginRight: '-16px', padding: '0 0 24px 16px' }}>
       <div className="flex overflow-x-auto" style={{ gap: '16px', paddingBottom: '4px', paddingRight: '16px', scrollbarWidth: 'none' }}>
         {books.map(book => (
-          <motion.div key={book.id} whileTap={{ scale: 0.96 }} className="flex flex-col shrink-0" style={{ gap: '6px', width: '120px', cursor: 'pointer' }}>
-            <BookCover cover={book.cover} title={book.title} style={{ width: '120px', height: '186px', borderRadius: '6px', objectPosition: 'top', boxShadow: '0px 2px 4px 0px var(--alpha-grey-10), 0px 7px 7px 0px var(--alpha-grey-09), 0px 16px 9px 0px var(--alpha-grey-05)' }} />
+          <motion.div key={book.id} whileTap={{ scale: 0.96 }} className="flex flex-col shrink-0" style={{ gap: '2px', width: '140px', cursor: 'pointer' }}>
+            <BookCover cover={book.cover} title={book.title} style={{ width: '140px', height: '210px', borderRadius: '8px', objectPosition: 'top', boxShadow: '0px 2px 4px 0px var(--alpha-grey-10), 0px 7px 7px 0px var(--alpha-grey-09), 0px 16px 9px 0px var(--alpha-grey-05)' }} />
             <p style={{ fontSize: '14px', fontWeight: 600, lineHeight: '18px', color: 'var(--neutral-12)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.title}</p>
-            <p style={{ fontSize: '14px', fontWeight: 500, lineHeight: '18px', color: 'var(--neutral-11)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.author}</p>
+            <p style={{ fontSize: '12px', fontWeight: 400, lineHeight: '16px', color: 'var(--neutral-11)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.author}</p>
           </motion.div>
         ))}
       </div>
