@@ -59,16 +59,16 @@ function TabletLayout({ isLoggedIn, onLogin, onLogout }) {
       <TabletHeroBanner />
 
       <TabletQuickAccessCards />
-      <div style={{ height: '32px' }} />
+      <div style={{ height: '8vh' }} />
       <TabletCategorySlider />
-      <div style={{ height: '8px' }} />
+      <div style={{ height: '8vh' }} />
       <TabletBookCarousel books={BOOKS.slice(0, 6)} />
-      <div style={{ height: '28px' }} />
+      <div style={{ height: '8vh' }} />
       <TabletHighlightFestival />
-      <div style={{ height: '32px' }} />
+      <div style={{ height: '8vh' }} />
       <TabletAgendaPills />
       <TabletAgendaEventCards />
-      <div style={{ height: '24px' }} />
+      <div style={{ height: '8vh' }} />
       <TabletHeritageSection />
       <TabletFooter />
     </div>
@@ -136,22 +136,22 @@ function TabletHeroBanner() {
   const totalHeight = 'calc(100vh - 60px)'
   return (
     <div style={{ overflow: 'hidden', position: 'relative', height: totalHeight, display: 'flex', flexDirection: 'column' }}>
-      {/* Partie image + overlay + texte : 70% */}
-      <div style={{ position: 'relative', height: '70%', overflow: 'hidden' }}>
-        <img
-          src="/images/bibliotheque-meriadeck-modernisation-600ea42d10895907865413%20(1).jpg"
-          alt=""
-          aria-hidden="true"
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
-        />
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(131deg, rgba(28,55,54,1) 0%, rgba(32,90,89,0.75) 100%)' }} />
-        <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 24px', color: 'white' }}>
-          <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '28px', fontWeight: 700, margin: 0, lineHeight: '36px' }}>Explorez, découvrez,<br />vivez la culture</h2>
-          <p style={{ fontSize: '15px', marginTop: '12px', opacity: 0.9, lineHeight: '22px' }}>Accédez à 1,3 million de documents et participez à la vie culturelle du réseau des Bibliothèques de Bordeaux.</p>
-        </div>
+      {/* Image de fond full width sur toute la hauteur */}
+      <img
+        src="/images/bibliotheque-meriadeck-modernisation-600ea42d10895907865413%20(1).jpg"
+        alt=""
+        aria-hidden="true"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
+      />
+      {/* Overlay vert sur toute la hauteur */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(131deg, rgba(28,55,54,1) 0%, rgba(32,90,89,0.75) 100%)' }} />
+      {/* Partie texte : 70% */}
+      <div style={{ position: 'relative', zIndex: 2, height: '70%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 24px', color: 'white' }}>
+        <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '28px', fontWeight: 700, margin: 0, lineHeight: '36px' }}>Explorez, découvrez,<br />vivez la culture</h2>
+        <p style={{ fontSize: '15px', marginTop: '12px', opacity: 0.9, lineHeight: '22px' }}>Accédez à 1,3 million de documents et participez à la vie culturelle du réseau des Bibliothèques de Bordeaux.</p>
       </div>
-      {/* Barre de recherche fond blanc : 30% */}
-      <div style={{ height: '30%', backgroundColor: '#FFFFFF', display: 'flex', alignItems: 'center', padding: '16px' }}>
+      {/* Barre de recherche : 30% — posée sur le fond vert/photo */}
+      <div style={{ position: 'relative', zIndex: 2, height: '30%', display: 'flex', alignItems: 'center', padding: '16px' }}>
         <div className="flex items-center w-full" style={{ height: '48px', backgroundColor: 'white', border: '1px solid #DAD9DB', borderRadius: '9999px', padding: '0 16px', gap: '8px', boxShadow: SHADOW_HEADER }}>
           <IconSearch size={18} strokeWidth={2} color="#8E8D8F" aria-hidden="true" />
           <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Chercher un livre…" aria-label="Chercher un livre" className="flex-1 bg-transparent outline-none border-none" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#222123' }} />
