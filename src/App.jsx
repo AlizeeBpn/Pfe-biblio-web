@@ -24,7 +24,6 @@ import {
   IconCalendarEvent,
   IconChevronLeft,
   IconStar,
-  IconArrowNarrowRight,
 } from '@tabler/icons-react'
 
 import Badge from './components/ui/Badge'
@@ -86,7 +85,7 @@ function SectionTitle({ children, style = {} }) {
 /* ══════════════════════════════════════════════════════════════
    A) HEADER — sticky 80px (layout: gap 266px, padding 16px 21px 16px 320px)
    ══════════════════════════════════════════════════════════════ */
-function WebHeader({ isLoggedIn, onLogin, onLogout }) {
+export function WebHeader({ isLoggedIn, onLogin, onLogout }) {
   const [query, setQuery] = useState('')
   const [userMenuOpen, setUserMenuOpen] = useState(false)
 
@@ -279,7 +278,7 @@ const NAV_ITEMS = [
   { label: 'Services',   href: '#services',   icon: '/images/icon-services.svg' },
 ]
 
-function WebNav() {
+export function WebNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -360,7 +359,7 @@ function WebNav() {
    C) HERO — 400px, fond gradient + image (padding: 77px 320px)
    Repris fidèlement depuis Figma node 854:7880
    ══════════════════════════════════════════════════════════════ */
-function WebHero() {
+export function WebHero() {
   return (
     <section
       className="w-full flex items-center"
@@ -458,8 +457,8 @@ const quickAccessData = [
   },
   {
     title: 'Bibliothèque accessible',
-    desc: 'Des besoins etc',
-    cta: 'Me renseigner',
+    desc: 'Des services adaptés pour faciliter votre accès à la lecture',
+    cta: 'En savoir plus',
     icon: IconEye,
     iconBg: '#E1F7F6',
     iconColor: '#297473',
@@ -474,8 +473,8 @@ const quickAccessData = [
   },
   {
     title: 'Ressources numériques',
-    desc: 'Lire, écouter, voir',
-    cta: 'Voir plus de bibliothèques',
+    desc: 'Livres, musique, films et presse en ligne',
+    cta: 'Explorer',
     icon: IconBook,
     iconBg: '#E1F7F6',
     iconColor: '#297473',
@@ -538,13 +537,13 @@ function QuickAccessCard({ icon: Icon, title, desc, cta, iconBg, iconColor }) {
         }}
       >
         <span>{cta}</span>
-        <IconArrowNarrowRight size={20} strokeWidth={2} />
+        <IconChevronRight size={20} strokeWidth={2} />
       </button>
     </motion.div>
   )
 }
 
-function WebQuickAccessSection() {
+export function WebQuickAccessSection() {
   return (
     <section className="w-full py-8 lg:py-12" style={{ backgroundColor: '#F9F9FA' }}>
       <Container className="flex flex-col gap-4 lg:gap-8 h-full">
@@ -736,7 +735,7 @@ function BookCard({ book, colorIndex }) {
   )
 }
 
-function WebRecommendationsSection() {
+export function WebRecommendationsSection() {
   const catScrollRef = useRef(null)
   const bookScrollRef = useRef(null)
 
@@ -877,7 +876,7 @@ function WebRecommendationsSection() {
    F) À NE PAS MANQUER — Festival 33 Tour + YouTube embed
    padding: 80px 320px, gap: 48px, bg: #FEF6F9
    ══════════════════════════════════════════════════════════════ */
-function WebHighlightSection() {
+export function WebHighlightSection() {
   return (
     <section className="w-full py-10 lg:py-[80px]" style={{ backgroundColor: '#FEF6F9' }}>
       <Container className="flex flex-col gap-8 lg:gap-[48px]">
@@ -1013,7 +1012,7 @@ function WebHighlightSection() {
               }}
             >
               <span>Voir la chaîne YouTube</span>
-              <IconArrowNarrowRight size={20} strokeWidth={2} />
+              <IconChevronRight size={20} strokeWidth={2} />
             </button>
           </div>
         </div>
@@ -1141,7 +1140,7 @@ function EventCard({ event }) {
   )
 }
 
-function WebAgendaSection() {
+export function WebAgendaSection() {
   const [activeToggle, setActiveToggle] = useState('À la une')
 
   return (
@@ -1177,7 +1176,7 @@ function WebAgendaSection() {
           >
             <IconCalendarEvent size={20} strokeWidth={2} />
             <span>Tout l'agenda</span>
-            <IconArrowNarrowRight size={20} strokeWidth={2} />
+            <IconChevronRight size={20} strokeWidth={2} />
           </button>
         </div>
 
@@ -1197,7 +1196,7 @@ function WebAgendaSection() {
    H) DÉCOUVRIR LE PATRIMOINE — overlay background + 3 cards
    padding: 58px 320px, gap: 48px, border-bottom: 20px solid #357E7D
    ══════════════════════════════════════════════════════════════ */
-function WebHeritageSection() {
+export function WebHeritageSection() {
   return (
     <section
       className="w-full py-10 lg:py-[58px]"
@@ -1283,7 +1282,7 @@ const FOOTER_LINKS = [
   { label: 'Accessibilité',         href: '#accessibilite'    },
 ]
 
-function WebFooter() {
+export function WebFooter() {
   return (
     <footer
       className="w-full py-10"
@@ -1404,31 +1403,3 @@ function WebFooter() {
 }
 
 
-/* ══════════════════════════════════════════════════════════════
-   APP — Point d'entrée
-   ══════════════════════════════════════════════════════════════ */
-export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  return (
-    <div className="min-h-screen w-full" style={{ fontFamily: 'var(--font-body)', backgroundColor: '#F9F9FA', color: '#656366' }}>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded focus:bg-[#25706F] focus:text-white focus:font-bold focus:no-underline">
-        Aller au contenu
-      </a>
-
-      <WebHeader isLoggedIn={isLoggedIn} onLogin={() => setIsLoggedIn(true)} onLogout={() => setIsLoggedIn(false)} />
-      <WebNav />
-
-      <main id="main-content">
-        <WebHero />
-        <WebQuickAccessSection />
-        <WebRecommendationsSection />
-        <WebHighlightSection />
-        <WebAgendaSection />
-        <WebHeritageSection />
-      </main>
-
-      <WebFooter />
-    </div>
-  )
-}
