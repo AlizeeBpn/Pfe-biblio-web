@@ -49,8 +49,9 @@ const NAV_ITEMS = [
 /* ══════════════════════════════════════════════════════════════
    TABLET / MOBILE LAYOUT
    ══════════════════════════════════════════════════════════════ */
-function TabletLayout({ isLoggedIn, onLogin, onLogout }) {
+function TabletLayout({ isLoggedIn, onLogin, onLogout, viewport }) {
   const [burgerOpen, setBurgerOpen] = useState(false)
+  const isTablet = viewport === 'tablet'
 
   return (
     <div className="min-h-screen" style={{ fontFamily: 'var(--font-body)', backgroundColor: 'var(--color-white)', color: 'var(--color-text-body)', maxWidth: '100%', marginInline: 'auto', overflowX: 'hidden' }}>
@@ -58,17 +59,17 @@ function TabletLayout({ isLoggedIn, onLogin, onLogout }) {
 
       <TabletHeroBanner />
 
-      <TabletQuickAccessCards />
+      <TabletQuickAccessCards isTablet={isTablet} />
       <div style={{ height: '8vh' }} />
-      <TabletCategorySlider />
+      <TabletCategorySlider isTablet={isTablet} />
       <div style={{ height: '16px' }} />
-      <TabletBookCarousel books={BOOKS.slice(0, 6)} />
+      <TabletBookCarousel books={BOOKS.slice(0, 6)} isTablet={isTablet} />
       <div style={{ height: '8vh' }} />
       <TabletHighlightFestival />
       <TabletVideoTeaser />
       <div style={{ height: '8vh' }} />
       <TabletAgendaPills />
-      <TabletAgendaEventCards />
+      <TabletAgendaEventCards isTablet={isTablet} />
       <div style={{ height: '8vh' }} />
       <TabletHeritageSection />
       <TabletFooter />
@@ -137,21 +138,17 @@ function TabletHeroBanner() {
   const totalHeight = 'calc(100vh - 60px)'
   return (
     <div style={{ overflow: 'hidden', position: 'relative', height: totalHeight, display: 'flex', flexDirection: 'column' }}>
-      {/* Image de fond full width sur toute la hauteur */}
       <img
         src="/images/bibliotheque-meriadeck-modernisation-600ea42d10895907865413%20(1).jpg"
         alt=""
         aria-hidden="true"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
       />
-      {/* Overlay vert sur toute la hauteur */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(131deg, rgba(28,55,54,1) 0%, rgba(32,90,89,0.75) 100%)' }} />
-      {/* Partie texte : 70% */}
       <div style={{ position: 'relative', zIndex: 2, height: '70%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 24px', color: 'white' }}>
         <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '28px', fontWeight: 700, margin: 0, lineHeight: '36px' }}>Explorez, découvrez,<br />vivez la culture</h2>
         <p style={{ fontSize: '15px', marginTop: '12px', opacity: 0.9, lineHeight: '22px' }}>Accédez à 1,3 million de documents et participez à la vie culturelle du réseau des Bibliothèques de Bordeaux.</p>
       </div>
-      {/* Barre de recherche : 30% — posée sur le fond vert/photo */}
       <div style={{ position: 'relative', zIndex: 2, height: '30%', display: 'flex', alignItems: 'center', padding: '16px' }}>
         <div className="flex items-center w-full" style={{ height: '48px', backgroundColor: 'white', border: '1px solid #DAD9DB', borderRadius: '9999px', padding: '0 16px', gap: '8px', boxShadow: SHADOW_HEADER }}>
           <IconSearch size={18} strokeWidth={2} color="#8E8D8F" aria-hidden="true" />
@@ -162,29 +159,35 @@ function TabletHeroBanner() {
   );
 }
 
-/* ── Quick Access — grille 2×2, bouton fixe en bas ── */
-function TabletQuickAccessCards() {
+/* ── Quick Access — grille 2×2 ── */
+function TabletQuickAccessCards({ isTablet }) {
   const cards = [
-    { title: 'Contact', desc: 'Discussion en ligne ou réservation de communication sur place', cta: 'Contacter', icon: <IconMessageChatbot size={24} strokeWidth={1.5} color="#297473" />, iconBg: '#E1F7F6' },
-    { title: 'Accessibilité', desc: 'Des services adaptés pour faciliter votre accès à la lecture', cta: 'En savoir plus', icon: <IconEye size={24} strokeWidth={1.5} color="#297473" />, iconBg: '#E1F7F6' },
-    { title: 'Mériadeck', desc: '85 Cr Maréchal Juin, 33000 Bordeaux — Ouvert jusqu\'à 20h', cta: 'Voir plus', icon: <IconBuildingStore size={24} strokeWidth={1.5} color="#4D0F26" />, iconBg: '#F4D2DE' },
-    { title: 'Ressources numériques', desc: 'Livres, musique, films et presse en ligne', cta: 'Explorer', icon: <IconBook size={24} strokeWidth={1.5} color="#297473" />, iconBg: '#E1F7F6' },
+    { title: 'Contact', desc: 'Discussion en ligne ou réservation de communication sur place', cta: 'Contacter', icon: <IconMessageChatbot size={isTablet ? 32 : 24} strokeWidth={1.5} color="#297473" />, iconBg: '#E1F7F6' },
+    { title: 'Accessibilité', desc: 'Des services adaptés pour faciliter votre accès à la lecture', cta: 'En savoir plus', icon: <IconEye size={isTablet ? 32 : 24} strokeWidth={1.5} color="#297473" />, iconBg: '#E1F7F6' },
+    { title: 'Mériadeck', desc: '85 Cr Maréchal Juin, 33000 Bordeaux — Ouvert jusqu\'à 20h', cta: 'Voir plus', icon: <IconBuildingStore size={isTablet ? 32 : 24} strokeWidth={1.5} color="#4D0F26" />, iconBg: '#F4D2DE' },
+    { title: 'Ressources numériques', desc: 'Livres, musique, films et presse en ligne', cta: 'Explorer', icon: <IconBook size={isTablet ? 32 : 24} strokeWidth={1.5} color="#297473" />, iconBg: '#E1F7F6' },
   ];
+  const cardPad = isTablet ? '24px 16px' : '14px 10px'
+  const iconSize = isTablet ? 52 : 38
+  const titleSize = isTablet ? 16 : 14
+  const descSize = isTablet ? 16 : 14
+  const btnH = isTablet ? 52 : 44
+  const btnFont = isTablet ? 16 : 14
 
   return (
-    <div className="flex flex-col" style={{ gap: '14px', padding: '24px 16px 24px' }}>
-      <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', color: 'var(--color-text-brand)', margin: '0 0 4px' }}>Accès rapides</h2>
-      <div className="grid grid-cols-2" style={{ gap: '8px' }}>
+    <div className="flex flex-col" style={{ gap: isTablet ? '20px' : '14px', padding: isTablet ? '32px 24px 32px' : '24px 16px 24px' }}>
+      <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: isTablet ? 24 : 20, color: 'var(--color-text-brand)', margin: '0 0 4px' }}>Accès rapides</h2>
+      <div className="grid grid-cols-2" style={{ gap: isTablet ? '16px' : '8px' }}>
         {cards.map(card => (
-          <motion.div key={card.title} whileTap={{ scale: 0.98 }} className="flex flex-col" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '12px', boxShadow: SHADOW_CARD, padding: '14px 10px' }}>
-            <div className="flex flex-col items-center" style={{ gap: '6px', flex: 1 }}>
-              <span aria-hidden="true" className="flex items-center justify-center rounded-full" style={{ width: '38px', height: '38px', backgroundColor: card.iconBg }}>{card.icon}</span>
-              <p style={{ fontSize: '14px', fontWeight: 600, lineHeight: '18px', color: '#222123', margin: 0, textAlign: 'center' }}>{card.title}</p>
-              <p style={{ fontSize: '14px', fontWeight: 400, lineHeight: '18px', color: '#828183', margin: 0, textAlign: 'center' }}>{card.desc}</p>
+          <motion.div key={card.title} whileTap={{ scale: 0.98 }} className="flex flex-col" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: isTablet ? 16 : 12, boxShadow: SHADOW_CARD, padding: cardPad }}>
+            <div className="flex flex-col items-center" style={{ gap: isTablet ? '10px' : '6px', flex: 1 }}>
+              <span aria-hidden="true" className="flex items-center justify-center rounded-full" style={{ width: iconSize + 'px', height: iconSize + 'px', backgroundColor: card.iconBg }}>{card.icon}</span>
+              <p style={{ fontSize: titleSize + 'px', fontWeight: 600, lineHeight: isTablet ? '22px' : '18px', color: '#222123', margin: 0, textAlign: 'center' }}>{card.title}</p>
+              <p style={{ fontSize: descSize + 'px', fontWeight: 400, lineHeight: isTablet ? '22px' : '18px', color: '#828183', margin: 0, textAlign: 'center' }}>{card.desc}</p>
             </div>
-            <button className="inline-flex items-center justify-center font-bold cursor-pointer border-none outline-none mt-auto" style={{ height: '44px', marginTop: '10px', padding: '0 10px', gap: '4px', fontSize: '14px', fontWeight: 700, borderRadius: '8px', backgroundColor: '#E1F7F6', color: '#297473' }}>
+            <button className="inline-flex items-center justify-center font-bold cursor-pointer border-none outline-none mt-auto" style={{ height: btnH + 'px', marginTop: '12px', padding: '0 12px', gap: '4px', fontSize: btnFont + 'px', fontWeight: 700, borderRadius: '8px', backgroundColor: '#E1F7F6', color: '#297473' }}>
               <span>{card.cta}</span>
-              <IconChevronRight size={14} strokeWidth={2} />
+              <IconChevronRight size={btnFont} strokeWidth={2} />
             </button>
           </motion.div>
         ))}
@@ -195,15 +198,18 @@ function TabletQuickAccessCards() {
 
 /* ── Categories slider ── */
 const TABLET_CATEGORIES = ['Roman', 'BD', 'Jeunesse', 'Sciences', 'Histoire', 'Arts', 'Policier', 'SF', 'Philo', 'Voyages'];
-function TabletCategorySlider() {
+function TabletCategorySlider({ isTablet }) {
+  const catW = isTablet ? 200 : 140
+  const catH = isTablet ? 80 : 60
+  const catFont = isTablet ? 18 : 15
   return (
-    <div className="flex flex-col" style={{ gap: '16px', padding: '0 16px 32px' }}>
-      <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', color: 'var(--color-text-brand)', margin: '0 0 4px' }}>Recommandé par les lecteurs</h2>
-      <div style={{ marginRight: '-16px' }}>
-        <div className="flex overflow-x-auto" style={{ gap: '8px', paddingBottom: '4px', paddingRight: '16px', scrollbarWidth: 'none' }}>
+    <div className="flex flex-col" style={{ gap: '16px', padding: isTablet ? '0 24px 32px' : '0 16px 32px' }}>
+      <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: isTablet ? 24 : 20, color: 'var(--color-text-brand)', margin: '0 0 4px' }}>Recommandé par les lecteurs</h2>
+      <div style={{ marginRight: isTablet ? '-24px' : '-16px' }}>
+        <div className="flex overflow-x-auto" style={{ gap: isTablet ? '16px' : '8px', paddingBottom: '4px', paddingRight: isTablet ? '24px' : '16px', scrollbarWidth: 'none' }}>
           {TABLET_CATEGORIES.map(cat => (
-            <motion.div key={cat} whileTap={{ scale: 0.96 }} className="relative shrink-0 flex items-center overflow-hidden" style={{ width: '140px', height: '60px', padding: '10px 12px', borderRadius: '8px', border: '1px solid #A6DCDA', background: 'linear-gradient(224deg, #FAFEFD 6%, #E1F7F6 90%)', boxShadow: SHADOW_NAV, cursor: 'pointer' }}>
-              <span style={{ position: 'relative', zIndex: 10, fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '15px', lineHeight: '120%', color: '#297473' }}>{cat}</span>
+            <motion.div key={cat} whileTap={{ scale: 0.96 }} className="relative shrink-0 flex items-center overflow-hidden" style={{ width: catW + 'px', height: catH + 'px', padding: '10px 12px', borderRadius: '8px', border: '1px solid #A6DCDA', background: 'linear-gradient(224deg, #FAFEFD 6%, #E1F7F6 90%)', boxShadow: SHADOW_NAV, cursor: 'pointer' }}>
+              <span style={{ position: 'relative', zIndex: 10, fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: catFont + 'px', lineHeight: '120%', color: '#297473' }}>{cat}</span>
               <div style={{ position: 'absolute', right: '-8px', bottom: '-10px', width: '40px', height: '56px', borderRadius: '4px', boxShadow: '0px -1px 2px 0px rgba(142,141,143,0.10), 0px -3px 3px 0px rgba(142,141,143,0.09), 0px -6px 4px 0px rgba(142,141,143,0.05), 0px 2px 4px 0px rgba(142,141,143,0.10), 0px 7px 7px 0px rgba(142,141,143,0.09)', transform: 'rotate(15deg)', overflow: 'hidden', zIndex: 1 }} aria-hidden="true">
                 <img src="/images/category-card-img.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </div>
@@ -264,19 +270,24 @@ const TABLET_EVENTS = [
   { badge: 'Exposition • Mériadeck', title: 'Révise à la bibli !', meta: 'Du 13 mai au 27 juin', img: '/images/event-revise.jpg' },
   { badge: 'Exposition • Mériadeck', title: '1001 Bornes – Joseph Le Callennec, as du crayon', meta: 'Du 27 mai au 27 juin - Mériadeck', img: '/images/event-1001bornes.jpg' },
 ];
-function TabletAgendaEventCards() {
+function TabletAgendaEventCards({ isTablet }) {
+  const imgH = isTablet ? 260 : 200
+  const padX = isTablet ? 24 : 16
+  const gap = isTablet ? 20 : 16
+  const titleSize = isTablet ? 24 : 20
+  const metaSize = isTablet ? 16 : 14
   return (
-    <div className="flex flex-col" style={{ gap: '16px', padding: '0 16px 24px' }}>
+    <div className="flex flex-col" style={{ gap: gap + 'px', padding: '0 ' + padX + 'px 24px' }}>
       {TABLET_EVENTS.map((event, i) => (
         <motion.a key={i} href="#event-detail" whileTap={{ scale: 0.98 }} className="flex flex-col overflow-hidden no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD }} aria-label={`${event.title} — En savoir plus`}>
-          <div style={{ height: '200px', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
+          <div style={{ height: imgH + 'px', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
             <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${event.img})`, backgroundSize: 'cover', backgroundPosition: 'top' }} />
           </div>
-          <div className="flex flex-col" style={{ padding: '16px', gap: '10px' }}>
+          <div className="flex flex-col" style={{ padding: isTablet ? '20px' : '16px', gap: isTablet ? '12px' : '10px' }}>
             <Badge variant="default" size="medium">{event.badge}</Badge>
-            <h3 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#222123', margin: 0 }}>{event.title}</h3>
-            <p style={{ fontSize: '14px', fontWeight: 400, lineHeight: '20px', color: '#656366', margin: 0 }}>{event.meta}</p>
-            <span className="inline-flex items-center" style={{ gap: '6px', fontSize: '14px', fontWeight: 600, color: '#297473' }}>En savoir plus <IconChevronRight size={16} strokeWidth={2} /></span>
+            <h3 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: titleSize + 'px', lineHeight: isTablet ? '30px' : '26px', color: '#222123', margin: 0 }}>{event.title}</h3>
+            <p style={{ fontSize: metaSize + 'px', fontWeight: 400, lineHeight: isTablet ? '22px' : '20px', color: '#656366', margin: 0 }}>{event.meta}</p>
+            <span className="inline-flex items-center" style={{ gap: '6px', fontSize: metaSize + 'px', fontWeight: 600, color: '#297473' }}>En savoir plus <IconChevronRight size={metaSize + 2} strokeWidth={2} /></span>
           </div>
         </motion.a>
       ))}
@@ -284,17 +295,14 @@ function TabletAgendaEventCards() {
   );
 }
 
-/* ── Découvrir le patrimoine — 100vh, image adaptée, boutons agrandis ── */
+/* ── Découvrir le patrimoine — 100vh ── */
 function TabletHeritageSection() {
   return (
     <section style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh', borderBottom: '20px solid #357E7D', display: 'flex', flexDirection: 'column' }}>
-      {/* Image de fond avec overlay — contain pour ne pas couper l'image */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         <img src="/images/heritage-bg.png" alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
       </div>
       <div style={{ position: 'absolute', inset: 0, zIndex: 1, backgroundColor: 'rgba(255,255,255,0.7)' }} />
-
-      {/* Contenu centré verticalement */}
       <div className="flex flex-col" style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '32px 16px 40px', gap: '20px' }}>
         <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '24px', lineHeight: '30px', color: '#204140', margin: 0 }}>Découvrir le patrimoine</h2>
         <div className="flex flex-col" style={{ gap: '12px' }}>
@@ -329,7 +337,6 @@ function TabletVideoTeaser() {
         style={{ borderRadius: '14px', boxShadow: SHADOW_CARD }}
         aria-label="Voir la vidéo de présentation"
       >
-        {/* Thumbnail */}
         <div style={{ position: 'relative', width: '100%', height: '200px', backgroundColor: '#204140' }}>
           <img
             src="/images/video-thumbnail.jpg"
@@ -337,14 +344,12 @@ function TabletVideoTeaser() {
             aria-hidden="true"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
-          {/* Overlay + bouton play */}
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div style={{ width: 0, height: 0, borderTop: '12px solid transparent', borderBottom: '12px solid transparent', borderLeft: '20px solid #204140', marginLeft: '4px' }} />
             </div>
           </div>
         </div>
-        {/* Label */}
         <div style={{ padding: '12px 16px', backgroundColor: '#FCFCFD', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '14px', fontWeight: 600, color: '#297473' }}>Découvrir en vidéo</span>
           <IconChevronRight size={16} strokeWidth={2} color="#297473" />
@@ -355,15 +360,19 @@ function TabletVideoTeaser() {
 }
 
 /* ── Book carousel ── */
-function TabletBookCarousel({ books }) {
+function TabletBookCarousel({ books, isTablet }) {
+  const bw = isTablet ? 180 : 140
+  const bh = isTablet ? 270 : 210
+  const titleSize = isTablet ? 16 : 14
+  const authorSize = isTablet ? 14 : 12
   return (
-    <div style={{ marginRight: '-16px', padding: '0 0 24px 16px' }}>
-      <div className="flex overflow-x-auto" style={{ gap: '16px', paddingBottom: '4px', paddingRight: '16px', scrollbarWidth: 'none' }}>
+    <div style={{ marginRight: isTablet ? '-24px' : '-16px', padding: '0 0 24px ' + (isTablet ? 24 : 16) + 'px' }}>
+      <div className="flex overflow-x-auto" style={{ gap: isTablet ? '24px' : '16px', paddingBottom: '4px', paddingRight: isTablet ? '24px' : '16px', scrollbarWidth: 'none' }}>
         {books.map(book => (
-          <motion.div key={book.id} whileTap={{ scale: 0.96 }} className="flex flex-col shrink-0" style={{ gap: '2px', width: '140px', cursor: 'pointer' }}>
-            <BookCover cover={book.cover} title={book.title} style={{ width: '140px', height: '210px', borderRadius: '8px', objectPosition: 'top', boxShadow: '0px 2px 4px 0px var(--alpha-grey-10), 0px 7px 7px 0px var(--alpha-grey-09), 0px 16px 9px 0px var(--alpha-grey-05)' }} />
-            <p style={{ fontSize: '14px', fontWeight: 600, lineHeight: '18px', color: 'var(--neutral-12)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.title}</p>
-            <p style={{ fontSize: '12px', fontWeight: 400, lineHeight: '16px', color: 'var(--neutral-11)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.author}</p>
+          <motion.div key={book.id} whileTap={{ scale: 0.96 }} className="flex flex-col shrink-0" style={{ gap: '2px', width: bw + 'px', cursor: 'pointer' }}>
+            <BookCover cover={book.cover} title={book.title} style={{ width: bw + 'px', height: bh + 'px', borderRadius: '8px', objectPosition: 'top', boxShadow: '0px 2px 4px 0px var(--alpha-grey-10), 0px 7px 7px 0px var(--alpha-grey-09), 0px 16px 9px 0px var(--alpha-grey-05)' }} />
+            <p style={{ fontSize: titleSize + 'px', fontWeight: 600, lineHeight: '20px', color: 'var(--neutral-12)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.title}</p>
+            <p style={{ fontSize: authorSize + 'px', fontWeight: 400, lineHeight: '18px', color: 'var(--neutral-11)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.author}</p>
           </motion.div>
         ))}
       </div>
@@ -407,7 +416,7 @@ export default function WebHomePage() {
   const handleLogout = () => setIsLoggedIn(false);
 
   if (viewport === 'tablet' || viewport === 'mobile') {
-    return <TabletLayout isLoggedIn={isLoggedIn} onLogin={handleLogin} onLogout={handleLogout} />;
+    return <TabletLayout isLoggedIn={isLoggedIn} onLogin={handleLogin} onLogout={handleLogout} viewport={viewport} />;
   }
 
   return (
