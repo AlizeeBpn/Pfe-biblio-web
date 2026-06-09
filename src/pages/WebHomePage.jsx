@@ -61,10 +61,11 @@ function TabletLayout({ isLoggedIn, onLogin, onLogout }) {
       <TabletQuickAccessCards />
       <div style={{ height: '8vh' }} />
       <TabletCategorySlider />
-      <div style={{ height: '8vh' }} />
+      <div style={{ height: '16px' }} />
       <TabletBookCarousel books={BOOKS.slice(0, 6)} />
       <div style={{ height: '8vh' }} />
       <TabletHighlightFestival />
+      <TabletVideoTeaser />
       <div style={{ height: '8vh' }} />
       <TabletAgendaPills />
       <TabletAgendaEventCards />
@@ -312,6 +313,44 @@ function TabletHeritageSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ── Vidéo teaser YouTube ── */
+function TabletVideoTeaser() {
+  return (
+    <div style={{ padding: '0 16px 16px' }}>
+      <motion.a
+        href="https://www.youtube.com/watch?v=example"
+        target="_blank"
+        rel="noopener noreferrer"
+        whileTap={{ scale: 0.98 }}
+        className="block relative overflow-hidden no-underline"
+        style={{ borderRadius: '14px', boxShadow: SHADOW_CARD }}
+        aria-label="Voir la vidéo de présentation"
+      >
+        {/* Thumbnail */}
+        <div style={{ position: 'relative', width: '100%', height: '200px', backgroundColor: '#204140' }}>
+          <img
+            src="/images/video-thumbnail.jpg"
+            alt=""
+            aria-hidden="true"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          {/* Overlay + bouton play */}
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 0, height: 0, borderTop: '12px solid transparent', borderBottom: '12px solid transparent', borderLeft: '20px solid #204140', marginLeft: '4px' }} />
+            </div>
+          </div>
+        </div>
+        {/* Label */}
+        <div style={{ padding: '12px 16px', backgroundColor: '#FCFCFD', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '14px', fontWeight: 600, color: '#297473' }}>Découvrir en vidéo</span>
+          <IconChevronRight size={16} strokeWidth={2} color="#297473" />
+        </div>
+      </motion.a>
+    </div>
   );
 }
 
