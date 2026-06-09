@@ -143,7 +143,7 @@ function TabletHeader({ isLoggedIn, onLogin, onLogout, burgerOpen, setBurgerOpen
 /* ── Hero ── */
 function TabletHeroBanner() {
   return (
-    <div style={{ overflow: 'hidden', position: 'relative', minHeight: '200px', display: 'flex', alignItems: 'center' }}>
+    <div style={{ overflow: 'hidden', position: 'relative', minHeight: '50vh', display: 'flex', alignItems: 'center' }}>
       {/* Image de fond */}
       <img
         src="/images/bibliotheque-meriadeck-modernisation-600ea42d10895907865413%20(1).jpg"
@@ -179,12 +179,12 @@ function TabletQuickAccessCards() {
           <motion.div key={card.title} whileTap={{ scale: 0.98 }} className="flex flex-col" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '12px', boxShadow: SHADOW_CARD, padding: '14px 10px' }}>
             <div className="flex flex-col items-center" style={{ gap: '6px', flex: 1 }}>
               <span aria-hidden="true" className="flex items-center justify-center rounded-full" style={{ width: '38px', height: '38px', backgroundColor: card.iconBg }}>{card.icon}</span>
-              <p style={{ fontSize: '13px', fontWeight: 600, lineHeight: '18px', color: '#222123', margin: 0, textAlign: 'center' }}>{card.title}</p>
-              <p style={{ fontSize: '11px', fontWeight: 400, lineHeight: '15px', color: '#828183', margin: 0, textAlign: 'center' }}>{card.desc}</p>
+              <p style={{ fontSize: '14px', fontWeight: 600, lineHeight: '18px', color: '#222123', margin: 0, textAlign: 'center' }}>{card.title}</p>
+              <p style={{ fontSize: '14px', fontWeight: 400, lineHeight: '18px', color: '#828183', margin: 0, textAlign: 'center' }}>{card.desc}</p>
             </div>
-            <button className="inline-flex items-center justify-center font-bold cursor-pointer border-none outline-none mt-auto" style={{ height: '30px', marginTop: '10px', padding: '0 10px', gap: '4px', fontSize: '11px', fontWeight: 700, borderRadius: '6px', backgroundColor: '#E1F7F6', color: '#297473' }}>
+            <button className="inline-flex items-center justify-center font-bold cursor-pointer border-none outline-none mt-auto" style={{ height: '44px', marginTop: '10px', padding: '0 10px', gap: '4px', fontSize: '14px', fontWeight: 700, borderRadius: '8px', backgroundColor: '#E1F7F6', color: '#297473' }}>
               <span>{card.cta}</span>
-              <IconChevronRight size={12} strokeWidth={2} />
+              <IconChevronRight size={14} strokeWidth={2} />
             </button>
           </motion.div>
         ))}
@@ -241,7 +241,7 @@ function TabletAgendaPills() {
   const [activePill, setActivePill] = useState('À la une');
   return (
     <div className="flex flex-col" style={{ gap: '16px', padding: '0 16px 32px' }}>
-      <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', color: 'var(--color-text-brand)', margin: '0 0 4px' }}>L'agenda du réseaux</h2>
+    <h2 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', color: 'var(--color-text-brand)', margin: '0 0 4px' }}>L'agenda du réseau</h2>
       <div style={{ marginRight: '-16px' }}>
         <div className="flex overflow-x-auto items-center" style={{ gap: '8px', paddingBottom: '4px', paddingRight: '16px', scrollbarWidth: 'none' }}>
           {AGENDA_TOGGLES.map(label => {
@@ -269,13 +269,13 @@ function TabletAgendaEventCards() {
     <div className="flex flex-col" style={{ gap: '10px', padding: '0 16px 24px' }}>
       {TABLET_EVENTS.map((event, i) => (
         <motion.a key={i} href="#event-detail" whileTap={{ scale: 0.98 }} className="flex flex-col overflow-hidden no-underline" style={{ backgroundColor: '#FCFCFD', border: '1px solid #F1F0F1', borderRadius: '14px', boxShadow: SHADOW_CARD }} aria-label={`${event.title} — En savoir plus`}>
-          <div style={{ height: '140px', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
-            <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${event.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          <div style={{ height: '120px', position: 'relative', overflow: 'hidden', backgroundColor: '#F4D2DE' }} aria-hidden="true">
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${event.img})`, backgroundSize: 'cover', backgroundPosition: 'top' }} />
           </div>
-          <div className="flex flex-col" style={{ padding: '12px', gap: '6px' }}>
+          <div className="flex flex-col" style={{ padding: '14px', gap: '8px' }}>
             <Badge variant="default" size="medium">{event.badge}</Badge>
-            <h3 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '14px', lineHeight: '18px', color: '#222123', margin: 0 }}>{event.title}</h3>
-            <p style={{ fontSize: '12px', fontWeight: 400, lineHeight: '16px', color: '#656366', margin: 0 }}>{event.meta}</p>
+            <h3 style={{ fontFamily: 'var(--font-brand)', fontWeight: 700, fontSize: '20px', lineHeight: '26px', color: '#222123', margin: 0 }}>{event.title}</h3>
+            <p style={{ fontSize: '14px', fontWeight: 400, lineHeight: '20px', color: '#656366', margin: 0 }}>{event.meta}</p>
           </div>
         </motion.a>
       ))}
@@ -323,8 +323,8 @@ function TabletBookCarousel({ books }) {
         {books.map(book => (
           <motion.div key={book.id} whileTap={{ scale: 0.96 }} className="flex flex-col shrink-0" style={{ gap: '6px', width: '120px', cursor: 'pointer' }}>
             <BookCover cover={book.cover} title={book.title} style={{ width: '120px', height: '186px', borderRadius: '6px', objectPosition: 'top', boxShadow: '0px 2px 4px 0px var(--alpha-grey-10), 0px 7px 7px 0px var(--alpha-grey-09), 0px 16px 9px 0px var(--alpha-grey-05)' }} />
-            <p style={{ fontSize: '12px', fontWeight: 600, lineHeight: 1, color: 'var(--neutral-12)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.title}</p>
-            <p style={{ fontSize: '10px', fontWeight: 500, lineHeight: 1, color: 'var(--neutral-11)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.author}</p>
+            <p style={{ fontSize: '14px', fontWeight: 600, lineHeight: '18px', color: 'var(--neutral-12)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.title}</p>
+            <p style={{ fontSize: '14px', fontWeight: 500, lineHeight: '18px', color: 'var(--neutral-11)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.author}</p>
           </motion.div>
         ))}
       </div>
